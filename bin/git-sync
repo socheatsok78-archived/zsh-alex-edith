@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if git remote | grep upstream > /dev/null; then
+    GIT_STATUS=$(git fetch upstream)
+
+    if [ -n "$GIT_STATUS" ]; then
+        git merge upstream/master
+    else
+        echo "Already up to date."
+    fi
+else
+    echo "Unable to find \"upstream\" remote within the repository."
+fi
+
