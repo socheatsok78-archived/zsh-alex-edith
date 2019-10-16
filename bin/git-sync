@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
 
+# Sync a fork of a repository to keep it up-to-date with the upstream repository.
+# https://help.github.com/en/articles/syncing-a-fork
+
+BRANCH=$1;
+
+GIT_BRANCH=${BRANCH:-master}
+
 if git remote | grep upstream > /dev/null; then
+    echo "Fetching upstream:$GIT_BRANCH..."
+
     GIT_STATUS=$(git fetch upstream)
 
     if [ -n "$GIT_STATUS" ]; then
-        git merge upstream/master
+        git merge upstream/$GIT_BRANCH
     else
         echo "Already up to date."
     fi
 else
     echo "Unable to find \"upstream\" remote within the repository."
 fi
-
